@@ -158,9 +158,20 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'test_platform/static')]  # если 
 
 # ---------- CSRF для AJAX ----------
 CSRF_COOKIE_HTTPONLY = False          # чтобы JS мог читать куку
-CSRF_TRUSTED_ORIGINS = []
 
-if DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']  # если запускаете локально
+# Безопасное получение CSRF_TRUSTED_ORIGINS
+_csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+if _csrf_origins:
+    CSRF_TRUSTED_ORIGINS = [
+        origin.strip()
+        for origin in _csrf_origins.split(',')
+        if origin.strip() and origin.strip().startswith(('http://', 'https://'))
+    ]
 else:
-    CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
+    CSRF_TRUSTED_ORIGINS = []
+
+# Если список пуст и DEBUG=False, добавляем предупреждение в лог, но не падаем
+if not CSRF_TRUSTED_ORIGINS and not DEBUG:
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning("CSRF_TRUSTED_ORIGINS is empty! Add it to .env to avoid CSRF issues.")
