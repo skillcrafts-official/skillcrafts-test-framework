@@ -22,6 +22,30 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  worker:
+    image: ${IMAGE_NAME}
+    container_name: test_framework_worker
+    restart: unless-stopped
+    command: celery -A skillcrafts_test_framework worker -l info
+    env_file:
+      - .env
+    networks:
+      - drf_blog_api_backend
+    volumes:
+      - test_framework_media_volume:/app/media   # если нужен доступ к media
+    depends_on:
+      - web
+
+  flower:
+    image: mher/flower
+    command: celery -A skillcrafts_test_framework flower --port=5555
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:5555:5555"
+    networks:
+      - drf_blog_api_backend
+
 networks:
   drf_blog_api_backend:
     external: true
