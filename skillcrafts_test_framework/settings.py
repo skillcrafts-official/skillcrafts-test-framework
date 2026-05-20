@@ -10,22 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev')
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else []
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--dzc_^2&(=3k@7_z!v4$$ik+85&2wbwq&ay1t7^^ndtu8fz+j$'
+# SECRET_KEY = 'django-insecure--dzc_^2&(=3k@7_z!v4$$ik+85&2wbwq&ay1t7^^ndtu8fz+j$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -73,10 +76,24 @@ WSGI_APPLICATION = 'skillcrafts_test_framework.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {}
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'skillcrafts_test_framework'),
+        'USER': os.environ.get('DB_USER', 'blog_user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -117,13 +134,18 @@ USE_TZ = True
 
 # settings.py (дополнения)
 
-import os
-
 # ---------- Celery ----------
+
+"""
 CELERY_BROKER_URL = 'redis://localhost:6379/0'   # или 'amqp://guest:guest@localhost:5672//'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+"""
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 
 # ---------- Медиа-файлы (для CSV) ----------
 MEDIA_URL = '/media/'
@@ -135,4 +157,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'test_platform/static')]  # если 
 
 # ---------- CSRF для AJAX ----------
 CSRF_COOKIE_HTTPONLY = False          # чтобы JS мог читать куку
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']  # если запускаете локально
+CSRF_TRUSTED_ORIGINS = []
+
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']  # если запускаете локально
+else:
+    CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')

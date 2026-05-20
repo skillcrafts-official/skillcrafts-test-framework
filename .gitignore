@@ -27,4 +27,5 @@ db.sqlite3
 
 # Environment & local settings
 .env
+.env.production
 *.local
