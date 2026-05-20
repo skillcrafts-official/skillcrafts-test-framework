@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillCrafts Test Framework</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 60px;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        #test-button {
+            font-size: 1.4rem;
+            padding: 12px 40px;
+            transition: all 0.2s;
+        }
+        #test-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #status-message {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        #result-table {
+            margin-top: 30px;
+            text-align: left;
+        }
+    
+        /* Цветовое оформление строк */
+        .tr-passed td { background-color: #d4edda !important; }
+        .tr-failed td { background-color: #f8d7da !important; }
+        .tr-error  td { background-color: #fff3cd !important; }
+        .tr-skipped td { background-color: #e2e3e5 !important; }
+    
+        /* Адаптивная таблица с корректным переносом */
+        #result-table table {
+            width: 100%;
+            table-layout: auto;
+        }
+        #result-table th,
+        #result-table td {
+            white-space: normal;
+            overflow-wrap: break-word;   /* Переносит длинные строки, но не разрывает обычные слова */
+            word-break: keep-all;        /* Не разрывает слова по буквам */
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="mb-4">Test Framework</h1>
+        <p class="lead">Нажмите кнопку, чтобы запустить полный регресс API-тестов</p>
+
+        <button id="test-button" class="btn btn-primary" onclick="startTests()">
+            Запустить тесты
+        </button>
+
+        <div id="status-message"></div>
+        
+        <div id="status-filter-container" class="mt-4 d-flex align-items-center gap-2" style="display: none !important;">
+            <label for="step-status-filter" class="form-label mb-0">Фильтр по шагам:</label>
+            <select id="step-status-filter" class="form-select w-auto">
+                <option value="all">Все</option>
+                <option value="passed">Passed</option>
+                <option value="failed">Failed</option>
+                <option value="error">Error</option>
+                <option value="skipped">Skipped</option>
+            </select>
+        </div>
+
+        <div id="result-table">
+            <!-- Таблица будет вставлена сюда после загрузки CSV -->
+        </div>
+        <div id="history-container" class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="mb-0">История запусков</h3>
+                <select id="history-status-filter" class="form-select w-auto">
+                    <option value="all">Все</option>
+                    <option value="completed">Успешные</option>
+                    <option value="failed">Проваленные</option>
+                    <option value="running">Выполняемые</option>
+                    <option value="pending">Ожидающие</option>
+                </select>
+            </div>
+            <div id="history-list" class="list-group"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'test_platform/dashboard.js' %}"></script>
+</body>
+</html>

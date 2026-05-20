@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# Django
+db.sqlite3
+/media
+/staticfiles
+
+# IDE & Editors
+.vscode/
+.idea/
+
+# Temporary & lock files
+.~lock.*
+*.swp
+.DS_Store
+
+# Environment & local settings
+.env
+*.local

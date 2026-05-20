@@ -1,0 +1,7 @@
+Project,Test Case ID,Title,Priority,Tags,Step Number,Step Description,Expected Result,Actual Result,Step Status,Step Duration,Error Message,Screenshot,Test Case Status,Test Case Duration
+Login Module Tests,e8afa74c,Successful Login with Valid Credentials,High,"smoke,login,positive",1,Enter valid username,Username is entered,Username is entered,passed,0.000s,,,passed,0.000s
+Login Module Tests,e8afa74c,Successful Login with Valid Credentials,High,"smoke,login,positive",2,Enter valid password,Password is entered,Password is entered,passed,0.000s,,,passed,0.000s
+Login Module Tests,e8afa74c,Successful Login with Valid Credentials,High,"smoke,login,positive",3,Click login button,User is redirected to dashboard,User is redirected to dashboard,passed,0.000s,,,passed,0.000s
+Login Module Tests,5d783052,Login with Invalid Password,Medium,"login,negative",1,Enter valid username,Username is entered,Username is entered,passed,0.000s,,,passed,0.000s
+Login Module Tests,5d783052,Login with Invalid Password,Medium,"login,negative",2,Enter invalid password,Password is entered,Password is entered,passed,0.000s,,,passed,0.000s
+Login Module Tests,5d783052,Login with Invalid Password,Medium,"login,negative",3,Click login button,Error message is displayed,Error message is displayed,passed,0.000s,,,passed,0.000s
