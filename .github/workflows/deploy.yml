@@ -66,7 +66,7 @@ jobs:
             cd /opt/skillcrafts_test_framework
             echo "IMAGE_NAME=ghcr.io/${{ github.repository }}:latest" > .env.docker
             docker pull ghcr.io/${{ github.repository }}:latest
-            docker compose -f docker-compose.prod.yml --env-file .env.docker stop web 2>/dev/null || true
-            docker compose -f docker-compose.prod.yml --env-file .env.docker rm -f web 2>/dev/null || true
-            docker compose -f docker-compose.prod.yml --env-file .env.docker up -d web
+            docker-compose -f docker-compose.prod.yml --env-file .env.docker stop web 2>/dev/null || true
+            docker-compose -f docker-compose.prod.yml --env-file .env.docker rm -f web 2>/dev/null || true
+            docker-compose -f docker-compose.prod.yml --env-file .env.docker up -d web
             docker system prune -f
