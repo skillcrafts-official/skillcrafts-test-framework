@@ -99,7 +99,7 @@ class ProfileFactory:
         count: int = 1,
         use_manual: bool = False,
         **overrides,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """
         Возвращает список профилей заданной длины.
 
