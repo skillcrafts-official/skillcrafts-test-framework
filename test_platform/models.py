@@ -25,3 +25,19 @@ class TestRun(models.Model):
 
     def __str__(self):
         return f"{self.run_type} run [{self.status}]"
+
+
+class WikiVisitCounter(models.Model):
+    """Синглтон-модель для хранения общего и уникального числа посещений wiki."""
+    total_visits = models.PositiveIntegerField(default=0)
+    unique_visits = models.PositiveIntegerField(default=0)
+
+    @classmethod
+    def get_counter(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+    def save(self, *args, **kwargs):
+        # Гарантируем, что всегда будет только одна запись с pk=1
+        self.pk = 1
+        super().save(*args, **kwargs)

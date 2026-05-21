@@ -85,6 +85,12 @@
             <ul class="nav flex-column">
                 {% include "test_platform/wiki_tree.html" with tree=wiki_tree current_path=current_path %}
             </ul>
+            <div class="wiki-visit-counter mt-4 pt-3 border-top">
+                <small class="text-muted">
+                    Посещений: {{ total_visits }}<br>
+                    Уникальных: {{ unique_visits }}
+                </small>
+            </div>
         </nav>
 
         <!-- Основная область контента -->

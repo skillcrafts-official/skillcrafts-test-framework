@@ -12,7 +12,7 @@ from django.conf import settings
 from django.utils._os import safe_join
 
 
-from .models import TestRun
+from .models import TestRun, WikiVisitCounter
 from .tasks import execute_tests
 
 
@@ -154,10 +154,23 @@ def wiki_page(request, page_path=''):
     tree = get_wiki_tree()
     current_path = safe_path if safe_path else 'index'
 
+    # --- Счётчик посещений ---
+    counter = WikiVisitCounter.get_counter()
+    counter.total_visits += 1
+
+    # Уникальный посетитель: проверяем флаг в сессии
+    if not request.session.get('has_wiki_visited', False):
+        request.session['has_wiki_visited'] = True
+        counter.unique_visits += 1
+
+    counter.save()
+
     context = {
         'wiki_tree': tree,
         'html_content': html_content,
         'current_path': current_path,
+        'total_visits': counter.total_visits,
+        'unique_visits': counter.unique_visits,
     }
     return render(request, 'test_platform/wiki_page.html', context)
 
