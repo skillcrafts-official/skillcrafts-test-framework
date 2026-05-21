@@ -63,9 +63,9 @@ class Auth(BaseService, ApiBaseAssertsMixin):
     """
     Модель данных описывается аналогично фреймворкам django и FastAPI
     """
-    access_token: Optional[str] = None   # токен
-    refresh_token: Optional[str] = None  # токен
-    user_id = str | None                 # мета-информация
+    access_token: str | None = None   # токен
+    refresh_token: str | None = None  # токен
+    user_id: str | None = None        # мета-информация
 ```
 А также метод, который будет делать запрос этих данных.
 ```python
