@@ -18,9 +18,15 @@
             padding: 0 15px;
             box-sizing: border-box;
         }
-        #test-button {
-            font-size: 1.4rem;
-            padding: 12px 40px;
+        .btn-group-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        #test-button, #wiki-button {
+            font-size: 1.2rem;
+            padding: 12px 30px;
             transition: all 0.2s;
         }
         #test-button:disabled {
@@ -50,8 +56,8 @@
         #result-table th,
         #result-table td {
             white-space: normal;
-            overflow-wrap: break-word;   /* Переносит длинные строки, но не разрывает обычные слова */
-            word-break: keep-all;        /* Не разрывает слова по буквам */
+            overflow-wrap: break-word;
+            word-break: keep-all;
             padding: 8px;
         }
     </style>
@@ -61,9 +67,17 @@
         <h1 class="mb-4">Test Framework</h1>
         <p class="lead">Нажмите кнопку, чтобы запустить полный регресс API-тестов</p>
 
-        <button id="test-button" class="btn btn-primary" onclick="startTests()">
-            Запустить тесты
-        </button>
+        <div class="btn-group-actions">
+            <button id="test-button" class="btn btn-primary" onclick="startTests()">
+                Запустить тесты
+            </button>
+            <a id="wiki-button" class="btn btn-outline-primary" href="/wiki/">
+                Wiki
+            </a>
+            <a id="wiki-button" class="btn btn-outline-primary" href="#">
+                Обзор тестов
+            </a>
+        </div>
 
         <div id="status-message"></div>
         

@@ -14,9 +14,11 @@ greenlet==3.5.0
 gunicorn==26.0.0
 idna==3.15
 kombu==5.6.2
+markdown==3.10.2
 packaging==26.2
 prompt-toolkit==3.0.52
 psycopg2-binary==2.9.12
+pygments==2.20.0
 python-dateutil==2.9.0.post0
 pyyaml==6.0.3
 redis==7.4.0

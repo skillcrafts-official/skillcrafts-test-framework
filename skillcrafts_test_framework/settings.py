@@ -175,3 +175,6 @@ if not CSRF_TRUSTED_ORIGINS and not DEBUG:
     import logging
     logger = logging.getLogger(__name__)
     logger.warning("CSRF_TRUSTED_ORIGINS is empty! Add it to .env to avoid CSRF issues.")
+
+# Кастомные константы
+WIKI_ROOT = BASE_DIR / 'wiki'

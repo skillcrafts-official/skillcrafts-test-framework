@@ -1,0 +1,17 @@
+{% for node in tree %}
+    {% if node.is_dir %}
+        <li class="nav-item">
+            <strong class="nav-link">{{ node.name }}</strong>
+            <ul class="nav flex-column ms-3">
+                {% include "test_platform/wiki_tree.html" with tree=node.children current_path=current_path %}
+            </ul>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link {% if node.url_name == current_path %}active{% endif %}"
+               href="{% if node.url_name %}{% url 'wiki_page' page_path=node.url_name %}{% else %}{% url 'wiki_index' %}{% endif %}">
+                {{ node.name }}
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}

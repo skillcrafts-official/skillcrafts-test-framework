@@ -1,6 +1,6 @@
 from ..registry import register_scenario
 from test_framework.test_models.api.skillcrafts import ProfilesService
-from test_framework.data_factories.profiles_factory import ProfileFactory
+from test_framework.data_factories.api.skilcrafts_platform.profiles_factory import ProfileFactory
 
 
 @register_scenario('profiles')
