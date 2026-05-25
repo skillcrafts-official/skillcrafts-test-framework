@@ -1,4 +1,4 @@
-from celery import shared_task
+from celery import Celery
 from django.core.files.base import ContentFile
 from test_framework.test_design.test_scenarios.registry import SCENARIO_REGISTRY
 # Чтобы все сценарии зарегистрировались, их нужно импортировать
@@ -6,7 +6,18 @@ import test_framework.test_design.test_scenarios.services.auth
 import test_framework.test_design.test_scenarios.services.profiles
 
 
-@shared_task
+app = Celery('test_framework')
+app.conf.update(
+    broker_url='redis://redis_service:6379/0',
+    result_backend='redis://redis_service:6379/1',   # если нужны результаты
+    task_serializer='json',
+    result_serializer='json',
+    accept_content=['json'],
+    timezone='Europe/Moscow',
+    enable_utc=True,
+)
+
+@app.task(name="app.test_framework")
 def execute_tests(run_id):
     """
     Универсальная задача Celery для выполнения тестов.
