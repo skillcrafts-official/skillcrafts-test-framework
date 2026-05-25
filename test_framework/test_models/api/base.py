@@ -1,9 +1,10 @@
+import os
 import requests
 from typing import Optional, Any
 
 
 class BaseService:
-    BASE_URL = "https://api.skillcrafts.ru"
+    BASE_URL = os.environ.get('BASE_URL', 'http://127.0.0.1:8000')
 
     def __init__(self):
         self.last_response: Optional[requests.Response] = None
