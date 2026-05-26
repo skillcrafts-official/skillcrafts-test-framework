@@ -178,6 +178,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'test_platform/static')]  # если 
 # ---------- CSRF для AJAX ----------
 CSRF_COOKIE_HTTPONLY = False          # чтобы JS мог читать куку
 
+# ---------- ENV для тестов ----------
+TEST_SERVICE = os.environ.get('BASE_URL', 'https://api.skillcrafts.ru')
+
 # Безопасное получение CSRF_TRUSTED_ORIGINS
 _csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
 if _csrf_origins:

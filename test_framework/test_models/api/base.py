@@ -2,9 +2,10 @@ import os
 import requests
 from typing import Optional, Any
 
+from skillcrafts_test_framework.settings import TEST_SERVICE
 
 class BaseService:
-    BASE_URL = os.environ.get('BASE_URL', 'http://127.0.0.1:8000')
+    BASE_URL = TEST_SERVICE
 
     def __init__(self):
         self.last_response: Optional[requests.Response] = None
