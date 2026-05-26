@@ -81,16 +81,11 @@ WSGI_APPLICATION = 'skillcrafts_test_framework.wsgi.application'
 
 DATABASES = {}
 
-DB_NAME=os.environ.get('DB_NAME', 'skillcrafts_test_framework'),
-DB_USER=os.environ.get('DB_USER', 'blog_user'),
-DB_PASSWORD=os.environ.get('DB_PASSWORD', ''),
-DB_HOST=os.environ.get('DB_HOST', 'localhost'),
-DB_PORT=os.environ.get('DB_PORT', '5432'),
-
-print(f"{DB_NAME=}")
-print(f"{DB_USER=}")
-print(f"{DB_HOST=}")
-print(f"{DB_PORT=}")
+DB_NAME=os.environ.get('DB_NAME', 'skillcrafts_test_framework')
+DB_USER=os.environ.get('DB_USER', 'blog_user')
+DB_PASSWORD=os.environ.get('DB_PASSWORD', '')
+DB_HOST=os.environ.get('DB_HOST', 'localhost')
+DB_PORT=os.environ.get('DB_PORT', '5432')
 
 if DEBUG:
     # DATABASES = {
@@ -202,3 +197,15 @@ if not CSRF_TRUSTED_ORIGINS and not DEBUG:
 
 # Кастомные константы
 WIKI_ROOT = BASE_DIR / 'wiki'
+
+
+# Выводим все переменные в лог
+print(f"{DB_NAME=}")
+print(f"{DB_USER=}")
+print(f"{DB_HOST=}")
+print(f"{DB_PORT=}")
+print(f"{DEBUG=}")
+print(f"{REDIS_HOST=}")
+print(f"{REDIS_PORT=}")
+print(f"{CELERY_BROKER_URL=}")
+print(f"{CELERY_RESULT_BACKEND=}")
