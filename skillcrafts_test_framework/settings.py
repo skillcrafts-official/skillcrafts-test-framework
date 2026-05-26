@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,6 +81,17 @@ WSGI_APPLICATION = 'skillcrafts_test_framework.wsgi.application'
 
 DATABASES = {}
 
+DB_NAME=os.environ.get('DB_NAME', 'skillcrafts_test_framework'),
+DB_USER=os.environ.get('DB_USER', 'blog_user'),
+DB_PASSWORD=os.environ.get('DB_PASSWORD', ''),
+DB_HOST=os.environ.get('DB_HOST', 'localhost'),
+DB_PORT=os.environ.get('DB_PORT', '5432'),
+
+print(f"{DB_NAME=}")
+print(f"{DB_USER=}")
+print(f"{DB_HOST=}")
+print(f"{DB_PORT=}")
+
 if DEBUG:
     # DATABASES = {
     #     'default': {
@@ -88,11 +102,11 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'skillcrafts_test_framework'),
-            'USER': os.environ.get('DB_USER', 'blog_user'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
         }
     }
 else:
